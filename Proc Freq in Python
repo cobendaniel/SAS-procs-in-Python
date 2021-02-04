@@ -1,0 +1,14 @@
+def procfreq(A, B, Key1, Key2):
+    # procfreq(A = df["VAR1"], B = df["VAR2"])
+    print("Cross tab for {} * {}".format(Key1, Key2))
+    table = pd.crosstab(A, B, margins = True)
+    return table
+
+def procfreqalt(df):
+    print("Please input the variable you want to analyze without quotation marks")
+    variable = input()
+    df_vc = df["{}".format(variable)].value_counts()
+    df2 = pd.DataFrame({"{}".format(variable) : df_vc.index, "Frequency" : df_vc.values,
+                        "Percent" : ((df_vc.values / df_vc.sum()) * 100).round(1), "Cumulative Frequency" : df_vc.values.cumsum(),
+                        "Cumulative Percent" : ((df_vc.values.cumsum() / df_vc.values.sum()) * 100).round(2)})
+    return df2
