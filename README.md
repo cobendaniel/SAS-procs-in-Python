@@ -11,3 +11,8 @@ My goal is to make it as straightforward as possible for non-Python users to cre
 As of now I haven't fixed a tiny error that I made where it says the user can use multiple columns / indexes when this is obviously not the case. I intend to fix this problem in v2.0.
 
 Besides the aforementioned reasons this function was made as a way to test my own abilities in Python as I'm still very inexperienced.
+
+2. Proc Freq in Python (Current Version: 1.0)
+
+These are very crude functions that I made as early attempts to recreate Proc Freq in Python. Neither of these functions have the capability to replicate some of the more advanced capabilities of Proc Freq which is why I plan on combining these two functions and adding some bells and whistles to the function to get a 1-to-1 replication of Proc Freq in Python. 
+
