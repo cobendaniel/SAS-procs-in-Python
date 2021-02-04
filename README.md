@@ -1,5 +1,5 @@
 # SAS-procs-in-Python
-A beginner's attempt at recreating SAS's statistical report generation PROCs in Python 
+A beginner's attempt at recreating SAS's statistical report generation PROCs in Python amongst others.
 
 Function log:
 1. Tabulation Function (Current Version: 1.0)
