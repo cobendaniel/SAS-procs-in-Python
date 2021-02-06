@@ -20,6 +20,8 @@ Major changes:
 Minor changes:
 1. Some variable names were changed to accommodate new logic
 
+I apparently forgot to fix the problem where analysis of multiple variables returns an error. I will try to remedy that in v3.0.
+
 # B. Proc Freq in Python (Current Version: 1.0)
 
 These are very crude functions that I made as early attempts to recreate Proc Freq in Python. Neither of these functions have the capability to replicate some of the more advanced capabilities of Proc Freq which is why I plan on combining these two functions and adding some bells and whistles to the function to get a 1-to-1 replication of Proc Freq in Python. 
