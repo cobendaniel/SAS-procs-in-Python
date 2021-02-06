@@ -1,0 +1,115 @@
+def easytabulate(df):
+    
+    df_columns = list(df.columns)
+    yes_answers = ["YES", "YEs", "Yes", "yes", "yeS", "yES", "yEs"]
+    no_answers = ["No", "no", "nO"]
+    
+    print("Please choose your index. Note that this parameter is compulsory. If you'd like to use multiple variables, please separate them with a comma")
+    index = input()
+    
+    if index not in df_columns:
+        print("{} is not in the dataset. Function terminated".format(index))
+        return
+    else:
+        index = index
+
+    print("Please choose your column. Note that this parameter is compulsory. If you'd like to use multiple variables, please separate them with a comma")
+    column = input()
+    
+    if column not in df_columns:
+        print("{} is not in the dataset. Function terminated".format(column))
+        return
+    elif index == column:
+        print("Index and Column variables are the same. Would you like to use proc freq instead? (Yes/No)")
+        procfreq_yes_no1 = input()
+        if procfreq_yes_no1 in yes_answers:
+            print("Would you like to use the previous variable? (Yes/No)")
+            newvar1 = input()
+            if newvar1 in yes_answers:
+                variable1 = column
+                df_a = df[variable1].value_counts()
+                df_b = pd.DataFrame({"{}".format(variable1) : df_a.index,
+                                    "Frequency" : df_a.values, 
+                                    "Percent" : ((df_a.values / df_a.sum()) * 100).round(2),
+                                    "Cumulative Frequency" : df_a.values.cumsum(),
+                                    "Cumulative Percent" : ((df_a.values.cumsum() / df_a.values.sum()) * 100).round(2)})
+
+                return df_b
+        elif procfreq_yes_no1 in no_answers:
+            print("Column and Index cannot be the same column. Function terminated")
+            return
+    else:
+        column = column
+
+    print("Please choose a variable for your rows.")
+    rows = input()
+
+    if rows not in df_columns:
+        print("{} is not in the dataset. Function terminated".format(rows))
+        return
+    else:
+        rows = rows
+    
+    row_type = df[rows].dtype
+    row_type = "{}".format(row_type) 
+    
+    if row_type == "object":
+        print("The row variable is a string, please use proc freq or value_counts() instead.")
+        print("Would you like to use proc freq? (Yes/No)")
+        procfreq_yes_no2 = input()
+        
+        if procfreq_yes_no2 in yes_answers:
+            print("Would you like to use the previous variable {}? (Yes/No)".format(rows))
+            newvar2 = input()
+            if newvar2 in yes_answers:
+                variable2 = rows                
+            elif newvar2 in no_answers:
+                print("Please choose a variable to analyze")
+                variable2 = input()
+                if variable2 not in df_columns:
+                    print("{} is not in the dataset. Function terminated". format(rows))
+                    return
+                elif variable2 in df_columns:
+                    variable2 = variable2
+            
+            df_vc = df[variable2].value_counts()
+            df2 = pd.DataFrame({"{}".format(variable2) : df_vc.index,
+                                "Frequency" : df_vc.values,
+                                "Percent" : ((df_vc.values / df_vc.sum()) * 100).round(2),
+                                "Cumulative Frequency" : df_vc.values.cumsum(),
+                                "Cumulative Percent" : ((df_vc.values.cumsum() / df_vc.values.sum()) * 100).round(2)})
+            return df2
+        elif procfreq_yes_no2 in no_answers:
+            print("Function Terminated.")
+            return
+    elif row_type != "object":
+        rows = rows
+
+    print("Would you like to use margins? (Yes/No)")
+    margins = input()
+
+    if margins in no_answers:
+        margins_1 = None
+    elif margins in yes_answers:
+        margins_1 = True
+
+    print("Which aggregate function would you like to use? (mean/sum/count/min/max/std)")
+    agfunc = input()
+
+    print("Would you like to fill NaN values? (Yes/No)")
+    nan_fill = input()
+
+    if nan_fill in yes_answers:
+        print("What would you like to use to fill NaN values?")
+        nan_fill1 = input()
+    elif nan_fill in no_answers:
+        nan_fill1 = None
+
+    df3 = df.pivot_table(index = [index],
+                         columns = [column],
+                         values = [rows],
+                         margins = margins_1,
+                         aggfunc = [agfunc],
+                         fill_value = nan_fill1)
+
+    return df3
