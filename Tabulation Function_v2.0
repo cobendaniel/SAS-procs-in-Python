@@ -2,7 +2,7 @@ def easytabulate(df):
     
     df_columns = list(df.columns)
     yes_answers = ["YES", "YEs", "Yes", "yes", "yeS", "yES", "yEs"]
-    no_answers = ["No", "no", "nO"]
+    no_answers = ["NO", "No", "no", "nO"]
     
     print("Please choose your index. Note that this parameter is compulsory. If you'd like to use multiple variables, please separate them with a comma")
     index = input()
