@@ -1,7 +1,7 @@
 # SAS-procs-in-Python
 A beginner's attempt at recreating SAS's statistical report generation PROCs in Python amongst others.
 
-# A - 1 Tabulation Function (Current Version: 1.0)
+# A - 1 Tabulation Function v1.0
 
 This function was created as a way of making the process of creating a pivot table as simple as possible for people who are absolute beginners with Python. I am very well aware that .pivot_table() and crosstab() are already straightforward enough as it is, but in my case I've encountered people who constantly forget how to utilize .pivot_table() (mostly people who are unfamiliar with Pandas or Python in general. I work at a company that heavily relies on SAS). 
 
@@ -11,7 +11,7 @@ As of now I haven't fixed a tiny error that I made where it says the user can us
 
 Besides the aforementioned reasons this function was made as a way to test my own abilities in Python as I'm still very inexperienced.
 
-# A - 2 Tabulation Function (Current Version: 2.0)
+# A - 2 Tabulation Function v2.0
 
 Major changes:
 1. An added list of common misspellings for Yes/No questions and changes to the way the answers for Yes/No questions are interpreted 
@@ -21,6 +21,17 @@ Minor changes:
 1. Some variable names were changed to accommodate new logic
 
 I apparently forgot to fix the problem where analysis of multiple variables returns an error. I will try to remedy that in v3.0.
+
+# A - 3 Tabulation Function v3.0
+
+Major changes:
+1. List of aggregation functions were added to ensure that users are using the correct functions.
+2. Added error messages to yes/no questions to ensure that users always answer with a yes or a no.
+
+Minor changes:
+1. Made a slight change to the no_answers list to include "NO" as well (was not included in v2.0)
+
+Have yet to make any progress on the multiple variables problem.
 
 # B. Proc Freq in Python (Current Version: 1.0)
 
