@@ -69,7 +69,13 @@ def easytabulate(df):
             print("Would you like to use the previous variable {}? (Yes/No)".format(rows))
             newvar2 = input()
             if newvar2 in yes_answers:
-                variable2 = rows                
+                variable2 = rows
+            elif newvar2 not in yes_answers:
+                print("Command not recognized, function terminated")
+                return
+            elif newvar2 not in no_answers:
+                print("Command not recognized, function terminated")
+                return
             elif newvar2 in no_answers:
                 print("Please choose a variable to analyze")
                 variable2 = input()
@@ -86,14 +92,9 @@ def easytabulate(df):
                                 "Cumulative Frequency" : df_vc.values.cumsum(),
                                 "Cumulative Percent" : ((df_vc.values.cumsum() / df_vc.values.sum()) * 100).round(2)})
             return df2
+
         elif procfreq_yes_no2 in no_answers:
             print("Function Terminated.")
-            return
-        elif procfreq_yes_no2 not in yes_answers:
-            print("Command not recognized, function terminated")
-            return
-        elif procfreq_yes_no2 not in no_answers:
-            print("Command not recognized, function terminated")
             return
     elif row_type != "object":
         rows = rows
