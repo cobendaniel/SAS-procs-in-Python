@@ -47,7 +47,7 @@ Planned changes:
 # A - 5 Tabulation Function v5.0
 
 Major changes:
-1. Added a kill command and redo command for the function.
+1. Added a kill command and redo command for all input windows in the function.
 2. Added new lists for new commands.
 
 Minor changes:
