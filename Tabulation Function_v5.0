@@ -1,0 +1,335 @@
+def easytabulate(df):
+
+    print("Welcome to the easytabulate function. This function was designed to make the production of pivot tables as")
+    print("easy as possible for non-Python users or Python beginners.")
+    print("")
+    print("All you have to do is follow the instructions and input variable names in the input window without the quotation marks")
+    print("or input Yes/No when prompted. Please remember that Python is case sensitive; any variables that are spelled differently")
+    print("from the way they are recorded in the table will not be recognized.")
+    print("")
+    print("If you'd like to restart the function, input 'redo' to restart the function from the beginning.")
+    print("If you'd like to stop the function, input 'quit' to end the function.")
+    print("")
+    
+    df_columns = list(df.columns)
+    yes_answers = ["YES", "YEs", "Yes", "yes", "yeS", "yES", "yEs"]
+    no_answers = ["NO", "No", "no", "nO"]
+    agg_functions = ["std", "sum", "mean", "min", "max", "count"]
+    redo_answers = ["Redo", "REdo", "redo"]
+    quit_answers = ["Quit", "QUit", "quit"]
+    
+    print("Please choose your index. Note that this parameter is compulsory.")
+    index = input()
+    print("")
+    
+    if index == "redo":
+        print("Redo command initiated")
+        print("")
+        easytabulate(df)  
+    elif index == "quit":
+        print("Quit command initiated, function terminated")
+        print("")
+        return    
+    
+    if index not in df_columns:
+        print("{} is not in the dataset. Function terminated".format(index))
+        return 
+    else:
+        index = index
+        
+    print("Please choose your column. Note that this parameter is compulsory.")
+    column = input()
+    print("")
+    
+    if column == "redo":
+        print("Redo command initiated")
+        easytabulate(df)
+    
+    if column == "quit":
+        print("Quit command intiated, function terminated")
+        print("")
+        return
+    
+    if column not in df_columns:
+        print("{} is not in the dataset. Function terminated".format(column))
+        print("")
+        return
+    elif index == column:
+        print("Index and Column variables are the same. Would you like to use proc freq instead? (Yes/No)")
+        print("")
+        procfreq_yes_no1 = input()
+        
+        if procfreq_yes_no1 == "redo":
+            print("Redo command initiated")
+            print("")
+            easytabulate(df)
+        
+        if procfreq_yes_no1 == "quit":
+            print("Quit command initiated, function terminated")
+            print("")
+            return
+        
+        if procfreq_yes_no1 in yes_answers:
+            print("Would you like to use the previous variable? (Yes/No)")
+            newvar1 = input()
+            print("")
+            if newvar1 in yes_answers:
+                variable1 = column
+                df_a = df[variable1].value_counts()
+                df_b = pd.DataFrame({"{}".format(variable1) : df_a.index,
+                                    "Frequency" : df_a.values, 
+                                    "Percent" : ((df_a.values / df_a.sum()) * 100).round(2),
+                                    "Cumulative Frequency" : df_a.values.cumsum(),
+                                    "Cumulative Percent" : ((df_a.values.cumsum() / df_a.values.sum()) * 100).round(2)})
+
+                return df_b
+        elif procfreq_yes_no1 in no_answers:
+            print("Column and Index cannot be the same column. Function terminated")
+            print("")
+            return
+        elif procfreq_yes_no1 not in yes_answers:
+            print("Command not recognized, function terminated")
+            print("")
+            return
+        elif procfreq_yes_no1 not in no_answers:
+            print("Command not recognized, function terminated")
+            print("")
+            return
+    else:
+        column = column
+
+    print("Please choose a variable for your rows.")
+    rows = input()
+    print("")
+    
+    if rows == "redo":
+        print("Redo command initiated.")
+        print("")
+        easytabulate(df)
+    
+    if rows == "quit":
+        print("Quit command initiated, function terminated.")
+        print("")
+        return
+
+    if rows not in df_columns:
+        print("{} is not in the dataset. Function terminated".format(rows))
+        print("")
+        return
+    else:
+        rows = rows
+    
+    row_type = df[rows].dtype
+    row_type = "{}".format(row_type) 
+    
+    if row_type == "object":
+        print("The row variable is a string, please use proc freq or value_counts() instead.")
+        print("")
+        print("Would you like to use proc freq? (Yes/No)")
+        procfreq_yes_no2 = input()
+        print("")
+        
+        if procfreq_yes_no2 == "redo":
+            print("Redo command initiated.")
+            print("")
+            easytabulate(df)
+            
+        if procfreq_yes_no2 == "quit":
+            print("Quit command initiated, function terminated")
+            print("")
+            return
+        
+        if procfreq_yes_no2 in yes_answers:
+            print("Would you like to use the previous variable {}? (Yes/No)".format(rows))
+            newvar2 = input()
+            print("")
+            
+            if newvar2 == "redo":
+                print("Redo command initiated.")
+                print("")
+                easytabulate(df)
+                
+            if newvar2 == "quit":
+                print("Quit command initiated, function terminated")
+                print("")
+                return
+            
+            if newvar2 in yes_answers:
+                variable2 = rows
+            elif newvar2 not in yes_answers:
+                print("Command not recognized, function terminated")
+                print("")
+                return
+            elif newvar2 not in no_answers:
+                print("Command not recognized, function terminated")
+                print("")
+                return
+            elif newvar2 in no_answers:
+                print("Please choose a variable to analyze")
+                variable2 = input()
+                print("")
+                
+                if variable2 == "redo":
+                    print("Redo command initiated.")
+                    print("")
+                    easytabulate(df)
+                    
+                if variable2 == "quit":
+                    print("Quit command initiated, function terminated.")
+                    print("")
+                    return
+                    
+                if variable2 not in df_columns:
+                    print("{} is not in the dataset. Function terminated". format(rows))
+                    print("")
+                    return
+                elif variable2 in df_columns:
+                    variable2 = variable2
+
+            df_vc = df[variable2].value_counts()
+            df2 = pd.DataFrame({"{}".format(variable2) : df_vc.index,
+                                "Frequency" : df_vc.values,
+                                "Percent" : ((df_vc.values / df_vc.sum()) * 100).round(2),
+                                "Cumulative Frequency" : df_vc.values.cumsum(),
+                                "Cumulative Percent" : ((df_vc.values.cumsum() / df_vc.values.sum()) * 100).round(2)})
+            return df2
+
+        elif procfreq_yes_no2 in no_answers:
+            print("Function Terminated.")
+            print("")
+            return
+    elif row_type != "object":
+        rows = rows
+
+    print("Would you like to use margins? (Yes/No)")
+    margins = input()
+    print("")
+    
+    if margins == "redo":
+        print("Redo command initiated.")
+        print("")
+        easytabulate(df)
+        
+    if margins == "quit":
+        print("Quit command initiated, function terminated")
+        print("")
+        return
+    
+    if margins in no_answers:
+        margins_1 = None
+    elif margins in yes_answers:
+        margins_1 = True
+    elif margins not in yes_answers:
+        print("Command not recognized, function terminated")
+        print("")
+        return
+    elif margins not in no_answers:
+        print("Command not recognized, function terminated")
+        print("")
+        return
+
+    print("Which aggregate function would you like to use? (mean/sum/count/min/max/std)")
+    agfunc = input()
+    print("")
+    
+    if agfunc == "redo":
+        print("Redo command initiated.")
+        print("")
+        easytabulate(df)
+        
+    if agfunc == "quit":
+        print("Quit command initiated, function terminated.")
+        print("")
+        return
+    
+    if agfunc in agg_functions:
+        agfunc = agfunc
+    elif agfunc not in agg_functions:
+        print("Command not recognized, function terminated")
+        print("")
+        return
+
+    print("Would you like to fill NaN values? (Yes/No)")
+    nan_fill = input()
+    print("")
+    
+    if nan_fill == "redo":
+        print("Redo command initiated.")
+        print("")
+        easytabulate(df)
+        
+    if agfunc == "quit":
+        print("Quit command initiated, function terminated")
+        print("")
+        return
+
+    if nan_fill in yes_answers:
+        print("What would you like to use to fill NaN values?")
+        nan_fill1 = input()
+        print("")
+        
+        if nan_fill1 == "redo":
+            print("Redo command initiated.")
+            print("")
+            easytabulate(df)
+            
+        if nan_fill1 == "quit":
+            print("Quit commmand initiated, function terminated.")
+            print("")
+            return
+        
+    elif nan_fill in no_answers:
+        nan_fill = None
+    elif nan_fill not in yes_answers:
+        print("Command not recognized, function terminated")
+        print("")
+        return
+    elif nan_fill not in no_answers:
+        print("Command not recognized, function terminated")
+        print("")
+        return
+    
+    if margins_1 == True:
+        marginfunc = "Yes"
+    elif margins_1 == None:
+        marginfunc = "No"
+    
+    print("Index variable: {}".format(index))
+    print("Column variable: {}".format(column))
+    print("Row variable: {}".format(rows))
+    print("Margins enabled?: {}".format(marginfunc))
+    print("Aggregate function: {}".format(agfunc))
+    print("NaN fill values: {}".format(nan_fill1))
+    print("")
+    print("If correct, input yes to proceed, or input no to restart function.")
+    proceed = input()
+    print("")
+    
+    if proceed == "redo":
+        print("Redo command initiated.")
+        print("")
+        easytabulate(df)
+        
+    if proceed == "quit":
+        print("Quit command initiated, function terminated")
+        print("")
+        return        
+    
+    if proceed in yes_answers:
+        df3 = df.pivot_table(index = [index],
+                             columns = [column],
+                             values = [rows],
+                             margins = margins_1,
+                             aggfunc = [agfunc],
+                             fill_value = nan_fill1)
+        return df3
+    elif proceed in no_answers:
+        easytabulate(df)
+    elif proceed not in yes_answers:
+        print("Command not recognized, function terminated")
+        print("")
+        return
+    elif proceed not in no_answers:
+        print("Command not recognized, function terminated")
+        print("")
+        return 
