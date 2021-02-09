@@ -35,7 +35,7 @@ Minor changes:
 Planned changes:
 1. Have yet to make any progress on the multiple variables problem.
 
-# A - 4 Tabulateion Function v4.0
+# A - 4 Tabulation Function v4.0
 
 Major changes:
 1. Added a confirmation option that prints out the final table. Once final table parameters are confirmed, inputting "yes" in the final input window will print the table, whereas if "no" is inputted, the function will restart from the beginning.
@@ -43,6 +43,18 @@ Major changes:
 Planned changes:
 1. Add in the option to analyze multiple variables.
 2. Add in a redo function that allows user to restart the function from the beginning if deemed necessary.
+
+# A - 5 Tabulation Function v5.0
+
+Major changes:
+1. Added a kill command and redo command for the function.
+2. Added new lists for new commands.
+
+Minor changes:
+1. Re-adjusted message format to make it easier to read.
+
+Planned Changes:
+1. Add in the option to analyze multiple variables.
 
 # B. Proc Freq in Python (Current Version: 1.0)
 
