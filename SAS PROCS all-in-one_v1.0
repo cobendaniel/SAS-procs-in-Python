@@ -3,7 +3,7 @@ def sasfuncs(df):
     print("This function currently allows for the simulation of SAS' PROC MEANS, PROC UNIVARIATE, PROC CORR, PROC TABULATE",)
     print("and PROC FREQ. Input the function you would like to simulate in all caps.")
     print("")
-    print("Note: This function requires the use of module "pandas_profiling" for PROC UNIVARIATE. If not installed, please install")
+    print("Note: This function requires the use of pandas_profiling for PROC UNIVARIATE. If not installed, please install")
     print("pandas_profiling using 'pip install pandas-profiling[notebook]'")
     print("")
     print("1. PROC MEANS")
@@ -26,6 +26,7 @@ def sasfuncs(df):
     if function == proc_list[0]:
         perc = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]
         return df.describe(percentiles = perc).T
+    
     elif function == proc_list[1]:
         from pandas_profiling import ProfileReport
         print("Note that this procedure may take a while depending on the size of the dataset.")
