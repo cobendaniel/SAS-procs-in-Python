@@ -1,0 +1,93 @@
+def sasfuncs(df):
+    print("Welcome to sasfuncs. This function is designed to emulate SAS' report generation functions in Python.")
+    print("This function currently allows for the simulation of SAS' PROC MEANS, PROC UNIVARIATE, PROC CORR, PROC TABULATE",)
+    print("and PROC FREQ. Input the function you would like to simulate in all caps.")
+    print("")
+    print("Note: This function requires the use of module "pandas_profiling" for PROC UNIVARIATE. If not installed, please install")
+    print("pandas_profiling using 'pip install pandas-profiling[notebook]'")
+    print("")
+    print("1. PROC MEANS")
+    print("2. PROC UNIVARIATE")
+    print("3. PROC CORR")
+    print("4. PROC TABULATE")
+    print("5. PROC FREQ")
+    print("")
+    function = input()
+    print("")
+    
+    import pandas as pd
+    import numpy as np
+    import seaborn as sns
+    
+    proc_list = ["PROC MEANS", "PROC UNIVARIATE", "PROC CORR", "PROC TABULATE", "PROC FREQ"]
+    
+    df_cols = list(df.columns)
+    
+    if function == proc_list[0]:
+        perc = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]
+        return df.describe(percentiles = perc).T
+    elif function == proc_list[1]:
+        from pandas_profiling import ProfileReport
+        print("Note that this procedure may take a while depending on the size of the dataset.")
+        print("")
+        return df.profile_report()
+    
+    elif function == proc_list[2]:
+        print("Please choose your target variable")
+        print("")
+        target_variable = input()
+        print("")
+        
+        df_dtype = pd.DataFrame({"Variables" : df.dtypes}).reset_index()
+        df_dtype = df_dtype.rename(columns = {"index" : "Variables", "Variables" : "Data Type"})
+        df_dtype_2 = df_dtype[df_dtype["Data Type"] != "object"]
+        proc_corr = pd.DataFrame({"Index" : range(0, len(list(df_dtype_2["Variables"])))})
+       
+        df_variables = pd.DataFrame({"Columns" : list(df_dtype_2["Variables"])})
+        proc_corr["Variables"] = df_variables
+        
+        N = pd.DataFrame({"N" : df[list(df_variables["Columns"])].count().reset_index(drop = True)})
+        proc_corr["N"] = N
+        Mean = pd.DataFrame({"Mean" : df[list(proc_corr["Variables"])].mean()}).reset_index(drop = True)
+        proc_corr["Mean"] = Mean
+       
+        Std = pd.DataFrame({"Std" : df[list(proc_corr["Variables"])].std()}).reset_index(drop = True)
+        proc_corr["Std"] = Std
+        
+        Sum = pd.DataFrame({"Sum" : df[list(proc_corr["Variables"])].sum()}).reset_index(drop = True)
+        proc_corr["Sum"] = Sum
+        
+        Min = pd.DataFrame({"Min" : df[list(proc_corr["Variables"])].sum()}).reset_index(drop = True)
+        proc_corr["Min"] = Min
+        
+        Max = pd.DataFrame({"Max" : df[list(proc_corr["Variables"])].sum()}).reset_index(drop = True)
+        proc_corr["Max"] = Max     
+        
+        correlation = []
+        
+        for i in list(df_variables["Columns"]):
+            correlation.append(df["{}".format(target_variable)].corr(df["{}".format(i)]))
+            
+        proc_corr["Correlation"] = correlation
+        
+        proc_corr = proc_corr.drop(columns = ["Index"])
+        
+        sns.heatmap(df[list(df_variables["Columns"])])
+
+        return proc_corr
+#     elif function == proc_list[3]:
+    
+    elif function == proc_list[4]:
+        print("Please choose the variable you would like to analyze")
+        print("")
+        analysis_var1 = input()
+        df_vc = pd.DataFrame({"Frequency" : df["{}".format(analysis_var1)].value_counts()})
+        df_vc["Value Percentage (%)"] = df_vc["Frequency"] / df_vc["Frequency"].sum() * 100
+        df_vc["Cumulative Frequency"] = df_vc["Frequency"].cumsum()
+        df_vc["Cumulative Percentage"] = df_vc["Value Percentage (%)"].cumsum()
+        return df_vc    
+    
+    elif function not in proc_list:
+        print("Command not recognized, function terminated")
+        print("")
+        return
