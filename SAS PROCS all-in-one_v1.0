@@ -73,7 +73,7 @@ def sasfuncs(df):
         
         proc_corr = proc_corr.drop(columns = ["Index"])
         
-        sns.heatmap(df[list(df_variables["Columns"])])
+        sns.heatmap((df[list(df_variables["Columns"])]).corr())
 
         return proc_corr
 #     elif function == proc_list[3]:
