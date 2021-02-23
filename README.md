@@ -90,4 +90,10 @@ PROC TABULATE is probably the most complicated function to implement in this ins
 
 While PROC FREQ was another function that I had to make myself, it was relatively easy to make compared to PROC CORR and PROC TABULATE. This statement only holds true to PROC FREQ for single variables however, which is what I have done up to this point. I plan on adding an option for cross-tabulations in the PROC FREQ section, which will most likely be a modified version of the PROC TABULATE code block. 
 
+# D. Data Selection Function_v1.0
+
+This is a crude variable selection function that I created for fun. It's basically a way of separating variables into numerical and character types. While select_dtype is by far a better choice when it comes to data separation, I simply wanted to know if my method of selecting data was actually possible or not. This logic behind this function is to convert the result of df.dtypes into a dataset (as expressed in code as datatype_1 and datatype_2), filter variables by variable type and use the remaining variables to filter the data table. 
+
+I only had numerical and character variable types in mind when I wrote this function. Options for other datatypes will be added in future updates.
+
 
