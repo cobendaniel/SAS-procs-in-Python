@@ -1,0 +1,31 @@
+def dataselector(df):
+    import pandas as pd
+    import numpy as np
+    
+    char_answers = ["Character", "CHARACTER", "character"]
+    num_answers = ["Numerical", "NUMERICAL", "numerical"]
+    
+    print("Welcome to the data selector function, where you can filter datasets by variable types.")
+    print("Please select which type of variable you would like (character / numerical)")
+    print("")
+    datatype = input()
+    print("")
+    
+    if datatype in char_answers:
+        datatype_1 = pd.DataFrame({"Type" : df.dtypes}).reset_index().rename(columns = {"index" : "Variables"})
+        datatype_1 = datatype_1[datatype_1["Type"] == "object"]
+        datatype_1 = df[list(datatype_1["Variables"])]
+        print(datatype_1.info())
+        return datatype_1
+    elif datatype in num_answers:
+        datatype_2 = pd.DataFrame({"Type" : df.dtypes}).reset_index().rename(columns = {"index" : "Variables"})
+        datatype_2 = datatype_2[datatype_2["Type"] != "object"]
+        datatype_2 = df[list(datatype_2["Variables"])]
+        print(datatype_2.info())
+        return datatype_2
+    elif datatype not in char_answers:
+        print("Command not recognized, function terminated.")
+        return
+    elif datatype not in num_answers:
+        print("Command not recognized, function terminated.")
+        return
